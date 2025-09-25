@@ -20,4 +20,9 @@ public class LabTest {
     private String testName;
     private String result;
 
+    @ManyToOne
+    private Doctor doctor;
+
+    @ManyToOne
+    private Patient patient;
 }
