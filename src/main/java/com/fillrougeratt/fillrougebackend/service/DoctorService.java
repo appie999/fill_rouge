@@ -11,6 +11,7 @@ import java.util.List;
 
 @Service
 public class DoctorService {
+
     private final DoctorRepo repo;
     private final DoctorMapper mapper;
 
@@ -38,7 +39,7 @@ public class DoctorService {
         doctor.setLastName(dto.getLastName());
         doctor.setUserName(dto.getUserName());
         doctor.setEmail(dto.getEmail());
-        doctor.setPassWord(doctor.getPassWord());
+        //doctor.setPassWord(doctor.getPassWord());
 
         return mapper.toDto(repo.save(doctor));
     }

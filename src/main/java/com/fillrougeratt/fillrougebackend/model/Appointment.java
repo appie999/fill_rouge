@@ -18,7 +18,11 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
+
+    @Column(nullable = false)
     private Date date;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @ManyToOne

@@ -18,7 +18,7 @@ public class DoctorController {
         this.service = service;
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public DoctorDto saveDoctor(@RequestBody DoctorDto dto){
         return service.saveDoctor(dto);
     }

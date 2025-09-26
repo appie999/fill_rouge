@@ -15,5 +15,8 @@ public class DoctorDto {
     private String firstName;
     private String lastName;
     private String userName;
+    private String specialty;
     private String email;
+    private String password;
+
 }

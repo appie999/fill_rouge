@@ -1,4 +1,4 @@
-package com.fillrougeratt.fillrougebackend.dto.request;
+package com.fillrougeratt.fillrougebackend.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -10,14 +10,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterAuthDTO {
+public class PatientDto{
 
     private String firstName;
     private String lastName;
-    private String email;
     private String userName;
+    private String email;
     private String password;
-    private String role;
-    private String specialty;
 
 }
