@@ -1,5 +1,6 @@
 package com.fillrougeratt.fillrougebackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
@@ -23,9 +24,11 @@ public class Doctor extends User {
     private String specialty;
 
     @OneToMany(mappedBy = "doctor")
+    @JsonIgnore
     private List<Appointment> appointments;
 
     @OneToMany(mappedBy = "doctor")
+    @JsonIgnore
     private List<LabTest> labTest;
 
 }

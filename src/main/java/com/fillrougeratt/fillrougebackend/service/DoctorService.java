@@ -39,7 +39,6 @@ public class DoctorService {
         doctor.setLastName(dto.getLastName());
         doctor.setUserName(dto.getUserName());
         doctor.setEmail(dto.getEmail());
-        //doctor.setPassWord(doctor.getPassWord());
 
         return mapper.toDto(repo.save(doctor));
     }

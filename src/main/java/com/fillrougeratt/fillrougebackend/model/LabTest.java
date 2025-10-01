@@ -1,6 +1,7 @@
 package com.fillrougeratt.fillrougebackend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class LabTest {
     private String result;
 
     @ManyToOne
+    @JsonIgnore
     private Doctor doctor;
 
     @ManyToOne

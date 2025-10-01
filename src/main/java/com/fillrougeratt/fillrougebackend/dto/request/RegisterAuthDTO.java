@@ -20,4 +20,6 @@ public class RegisterAuthDTO {
     private String role;
     private String specialty;
 
+    public RegisterAuthDTO(String token, String name, String userName, Long id) {
+    }
 }

@@ -25,13 +25,13 @@ public class AuthController {
 
     // @Valid
     @PostMapping("/register")
-    public ResponseEntity<?> register ( @RequestBody RegisterAuthDTO registerAuthDTO) {
+    public ResponseEntity<?> register (@RequestBody RegisterAuthDTO registerAuthDTO) {
         return authService.register( registerAuthDTO );
     }
 
-    public ResponseEntity<?> login (@Valid @RequestBody LoginAuthDTO loginAuthDTO) {
-
-        return null;
+    @PostMapping("/login")
+    public ResponseEntity<?> login (@RequestBody LoginAuthDTO loginAuthDTO) {
+        return authService.login(loginAuthDTO);
     }
 
 }
