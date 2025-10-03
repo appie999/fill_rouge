@@ -1,6 +1,7 @@
 package com.fillrougeratt.fillrougebackend.dto;
 
 
+import com.fillrougeratt.fillrougebackend.model.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,6 @@ public class AppointmentDto {
     private Long patientId;
     private Long doctorId;
 
+    public AppointmentDto(Long id, LocalDate date, Status status, Long patientId, Long doctorId) {
+    }
 }

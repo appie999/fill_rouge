@@ -32,7 +32,10 @@ public class AppointmentController {
         return service.getAllAppointment();
     }
 
-//    @PutMapping()
+    @PutMapping("{id}")
+    public AppointmentDto editAppointment(@PathVariable Long id, @RequestBody AppointmentDto dto){
+        return service.editAppointment(id, dto);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteAppointment(@PathVariable Long id){

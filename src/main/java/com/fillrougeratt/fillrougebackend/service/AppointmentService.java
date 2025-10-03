@@ -3,9 +3,13 @@ package com.fillrougeratt.fillrougebackend.service;
 import com.fillrougeratt.fillrougebackend.dto.AppointmentDto;
 import com.fillrougeratt.fillrougebackend.mapper.AppointmentMapper;
 import com.fillrougeratt.fillrougebackend.model.Appointment;
+import com.fillrougeratt.fillrougebackend.model.Doctor;
+import com.fillrougeratt.fillrougebackend.model.Patient;
 import com.fillrougeratt.fillrougebackend.model.Status;
 import com.fillrougeratt.fillrougebackend.repo.AppointmentRepo;
-import org.springframework.core.io.support.ResourcePatternResolver;
+import com.fillrougeratt.fillrougebackend.repo.DoctorRepo;
+import com.fillrougeratt.fillrougebackend.repo.PatientRepo;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +19,17 @@ public class AppointmentService {
 
     private final AppointmentRepo appointmentRepo;
     private final AppointmentMapper mapper;
-    private final ResourcePatternResolver resourcePatternResolver;
+    private final PatientRepo patientRepo;
+    private final DoctorRepo doctorRepo;
 
-    public AppointmentService(AppointmentRepo appointmentRepo, AppointmentMapper mapper, ResourcePatternResolver resourcePatternResolver) {
+    public AppointmentService(
+            AppointmentRepo appointmentRepo,
+            AppointmentMapper mapper, PatientRepo patientRepo, DoctorRepo doctorRepo
+    ) {
         this.appointmentRepo = appointmentRepo;
         this.mapper = mapper;
-        this.resourcePatternResolver = resourcePatternResolver;
+        this.patientRepo = patientRepo;
+        this.doctorRepo = doctorRepo;
     }
 
     public AppointmentDto saveAppointment(AppointmentDto dto){
@@ -36,12 +45,20 @@ public class AppointmentService {
         return appointmentRepo.findAll().stream().map(appointment -> mapper.toDto(appointment)).toList();
     }
 
-//    public AppointmentDto editAppointment(Long id, AppointmentDto dto){
-//        Appointment appointment = appointmentRepo.findById(id).get();
-//        appointment.setDate(dto.getDate());
-//        appointment.setStatus(Status.valueOf(dto.getStatus()));
-//        appointment.setDoctor(dto.getDoctorName());
-//    }
+    public AppointmentDto editAppointment(Long id, AppointmentDto dto){
+        Appointment appointment = appointmentRepo.findById(id).get();
+        appointment.setId(dto.getId());
+        appointment.setDate(dto.getDate());
+        appointment.setStatus(Status.valueOf(dto.getStatus()));
+        Patient patient = patientRepo.findById(dto.getPatientId())
+                .orElseThrow(()->new RuntimeException("patient not found"));
+        appointment.setPatient(patient);
+        Doctor doctor = doctorRepo.findById(dto.getDoctorId())
+                .orElseThrow(()->new RuntimeException("doctor not found"));
+        appointment.setDoctor(doctor);
+
+        return mapper.toDto(appointmentRepo.save(appointment));
+    }
 
     public void deleteAppointment(Long id){
         appointmentRepo.deleteById(id);
