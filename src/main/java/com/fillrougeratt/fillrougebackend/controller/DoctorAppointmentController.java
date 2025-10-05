@@ -24,7 +24,7 @@ public class DoctorAppointmentController {
     private final DoctorRepo doctorRepo;
 
 
-    @Qualifier("appointmentMapper")
+
     @Autowired
     private  AppointmentMapper mapper;
     private final AppointmentRepo appointmentRepo;

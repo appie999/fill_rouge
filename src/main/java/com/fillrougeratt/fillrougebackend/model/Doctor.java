@@ -27,8 +27,6 @@ public class Doctor extends User {
     @JsonIgnore
     private List<Appointment> appointments;
 
-    @OneToMany(mappedBy = "doctor")
-    @JsonIgnore
-    private List<LabTest> labTest;
+
 
 }

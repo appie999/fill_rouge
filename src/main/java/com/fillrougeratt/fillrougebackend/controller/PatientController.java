@@ -22,7 +22,7 @@ public class PatientController {
         return service.savePatient(dto);
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public List<PatientDto> getAllPatient(){
         return service.getAllPatient();
     }

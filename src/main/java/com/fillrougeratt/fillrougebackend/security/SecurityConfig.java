@@ -1,31 +1,58 @@
 package com.fillrougeratt.fillrougebackend.security;
 
 
+import com.fillrougeratt.fillrougebackend.filter.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(Customizer.withDefaults())
-                .csrf(csrf -> csrf.disable()) // disable CSRF
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // allow all requests
-                .formLogin(form -> form.disable()) // disable login form
-                .httpBasic(basic -> basic.disable()); // disable basic auth
+    private final JwtFilter jwtFilter;
 
-        return http.build();
+    public SecurityConfig(JwtFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationProvider authenticationProvider) throws Exception {
+        return http
+//                .cors(Customizer.withDefaults())
+//                .csrf(csrf -> csrf.disable()) // disable CSRF
+//                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // allow all requests
+//                .formLogin(form -> form.disable()) // disable login form
+//                .httpBasic(basic -> basic.disable()); // disable basic auth
+
+        .csrf(c -> c.disable())
+                .authorizeHttpRequests( req ->
+                        req.requestMatchers(
+                                        "/auth/**",
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**"
+                                )
+                                .permitAll()
+                                .anyRequest()
+                                .authenticated()
+                )
+//                .exceptionHandling(
+//                        ex -> ex.accessDeniedHandler(customAccessDeniedHandler)
+//                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
     @Bean

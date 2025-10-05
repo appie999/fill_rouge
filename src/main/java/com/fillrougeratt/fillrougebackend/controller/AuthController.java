@@ -3,7 +3,6 @@ package com.fillrougeratt.fillrougebackend.controller;
 import com.fillrougeratt.fillrougebackend.dto.request.LoginAuthDTO;
 import com.fillrougeratt.fillrougebackend.dto.request.RegisterAuthDTO;
 import com.fillrougeratt.fillrougebackend.service.AuthService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ public class AuthController {
     }
 
 
-    // @Valid
     @PostMapping("/register")
     public ResponseEntity<?> register (@RequestBody RegisterAuthDTO registerAuthDTO) {
         return authService.register( registerAuthDTO );

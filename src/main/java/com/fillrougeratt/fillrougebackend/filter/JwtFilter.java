@@ -1,6 +1,6 @@
 package com.fillrougeratt.fillrougebackend.filter;
 
-import com.fillrougeratt.fillrougebackend.service.CustomUserDetailsService;
+import com.fillrougeratt.fillrougebackend.service.UserDetailsServiceImpl;
 import com.fillrougeratt.fillrougebackend.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -10,18 +10,20 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@Component
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final CustomUserDetailsService customUserDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
-    public JwtFilter(JwtService jwtService, CustomUserDetailsService customUserDetailsService) {
+    public JwtFilter(JwtService jwtService, UserDetailsServiceImpl userDetailsService) {
         this.jwtService = jwtService;
-        this.customUserDetailsService = customUserDetailsService;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class JwtFilter extends OncePerRequestFilter {
              final String userEmail = jwtService.extractUsername(token);
 
              if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
-                 UserDetails userDetails = customUserDetailsService.loadUserByUsername(userEmail);
+                 UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
 
                  if (jwtService.isTokenValid(token, userDetails.getUsername())){
                      UsernamePasswordAuthenticationToken authToken =
