@@ -9,7 +9,6 @@ import com.fillrougeratt.fillrougebackend.model.Status;
 import com.fillrougeratt.fillrougebackend.repo.AppointmentRepo;
 import com.fillrougeratt.fillrougebackend.repo.DoctorRepo;
 import com.fillrougeratt.fillrougebackend.repo.PatientRepo;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
